@@ -6,6 +6,7 @@ const FORMS_ACTIONS = {
     const clientsWrapper = document.querySelector('.table__body');
 
     const client = document.createElement('div');
+    client.setAttribute('id', CLIENT_DATA.id);
     client.classList.add('client');
 
     const clientID = document.createElement('div');
@@ -45,6 +46,10 @@ const FORMS_ACTIONS = {
       EditForm.setAttribute('clientID', CLIENT_DATA.id);
       EditForm.classList.remove('element--disabled');
 
+      // ID field
+      const idField = document.querySelector('.edit-client__ID');
+      idField.textContent = `ID: ${CLIENT_DATA.id}`;
+
       // Clear Old Fields
       this.clearFields(EditForm);
 
@@ -63,6 +68,9 @@ const FORMS_ACTIONS = {
       currentClientData.contacts.forEach(contact => {
         this.createContactForm(contactsWrapper, true, contact);
       });
+    });
+    clientActionDelete.addEventListener('click', async () => {
+      this.deleteClient(CLIENT_DATA.id);
     });
 
 
@@ -181,7 +189,7 @@ const FORMS_ACTIONS = {
 
     CONTACT_WRAPPER.prepend(addContactWrapper);
   },
-  checkValidation(formContainer, errorMessageWrapper) {
+  checkValidation(formContainer, errorMessageWrapper, formType) {
     let validationFlag = true;
     const nameFields = document.querySelectorAll(`#${formContainer.id} > .form-client__input`);
     const contactsFields = document.querySelectorAll(`#${formContainer.id} .add-contant`);
@@ -217,9 +225,9 @@ const FORMS_ACTIONS = {
 
     if (validationFlag) {
       return {
-        name: document.getElementById('newClientName').value,
-        surname: document.getElementById('newClientSurname').value,
-        lastName: document.getElementById('newClientLastName').value,
+        name: document.getElementById(`${formType}ClientName`).value,
+        surname: document.getElementById(`${formType}ClientSurname`).value,
+        lastName: document.getElementById(`${formType}ClientLastName`).value,
         contacts: contactsList,
       };
     } else {
@@ -266,7 +274,15 @@ const FORMS_ACTIONS = {
       body: JSON.stringify(clientData),
     }));
   },
-  deleteClient() {
+  deleteClient(ID) {
+    // Delete from server
+    fetch(`http://localhost:3000/api/clients/${ID}`, {
+      method: 'DELETE',
+    });
+
+    // Clear table
+    const clientTableItem = document.getElementById(ID);
+    clientTableItem.remove();
   },
 }
 
@@ -306,7 +322,7 @@ function new_client_form() {
     event.preventDefault();
 
     const ERROR_MESSAGE = document.getElementById('newClientErrorMessage');
-    const DATA = FORMS_ACTIONS.checkValidation(FORM, ERROR_MESSAGE);
+    const DATA = FORMS_ACTIONS.checkValidation(FORM, ERROR_MESSAGE, 'new');
 
     if (DATA) {
       FORMS_ACTIONS.clearFields(FORM);
@@ -341,13 +357,18 @@ function edit_client_form() {
     event.preventDefault();
 
     // FORMS_ACTIONS.editClient(FORM.getAttribute('clientID'), );
-    const DATA = FORMS_ACTIONS.checkValidation(FORM, ERROR_MESSAGE);
+    const DATA = FORMS_ACTIONS.checkValidation(FORM, ERROR_MESSAGE, 'edit');
 
-    console.log(DATA);
     if (DATA) {
+      // Clean form
       FORMS_ACTIONS.clearFields(FORM);
       FORM.classList.add('element--disabled');
 
+      // Delete old DOM element
+      const clientTableItem = document.getElementById(FORM.getAttribute('clientID'));
+      clientTableItem.remove();
+
+      // Update data
       const NEW_CLIENT_DATA = await (await FORMS_ACTIONS.editClient(FORM.getAttribute('clientID'), DATA)).json();
       FORMS_ACTIONS.createClientField(NEW_CLIENT_DATA);
     } else {
@@ -357,6 +378,13 @@ function edit_client_form() {
 
   ACTION.deleteClient.addEventListener('click', event => {
     event.preventDefault();
+
+    // Clear form
+    FORMS_ACTIONS.clearFields(FORM);
+    FORM.classList.add('element--disabled');
+
+    //Delete client function
+    FORMS_ACTIONS.deleteClient(FORM.getAttribute('clientID'));
   });
 
   ACTION.closeForm.addEventListener('click', event => {
