@@ -393,9 +393,60 @@ function edit_client_form() {
     FORM.classList.add('element--disabled');
   });
 };
+function init_clients_filters() {
+  // Get clients
+  const getClients = async() => {
+    return ((await fetch(`http://localhost:3000/api/clients`)).json());
+  };
+
+  // Container
+  const container = document.querySelector('.table__body');
+  // Filter buttons
+  const IDFilter = document.querySelector('.section-id');
+  const nameFilter = document.querySelector('.section-name');
+  const createDateFilter = document.querySelector('.section-create-date');
+  const changeDateFilter = document.querySelector('.section-change-date');
+
+  // Init filters
+  IDFilter.addEventListener('click', async() => {
+    const CLIENT_DATA = (await getClients());
+    const SORTED_CLIENT_DATA = [];
+
+    for (let i = 0; i < CLIENT_DATA.length; i++) {
+      for (let j = 0; j < CLIENT_DATA.length; j++) {
+        if (Number(CLIENT_DATA[i].id) < Number(CLIENT_DATA[j].id)) {
+          const oldValue = CLIENT_DATA[i];
+          CLIENT_DATA[i] = CLIENT_DATA[j];
+          CLIENT_DATA[j] = oldValue;
+        };
+      };
+    };
+
+    container.innerHTML = '';
+    CLIENT_DATA.forEach(client => {
+      FORMS_ACTIONS.createClientField(client);
+    });
+  });
+
+  nameFilter.addEventListener('click', () => {
+
+  });
+
+  createDateFilter.addEventListener('click', () => {
+
+  });
+
+  changeDateFilter.addEventListener('click', () => {
+
+  });
+
+};
 
 
 // Initialization
 new_client_form();
 edit_client_form();
+init_clients_filters();
 FORMS_ACTIONS.showClient();
+
+// [{"name":"Арсений","surname":"Скрипников","lastName":"Дмитриевич","contacts":[{"type":"VK","value":"id-13131"},{"type":"Email","value":"ars@ma.ru"},{"type":"Телефон","value":"75757575"}],"id":"1704295325852","updatedAt":"2024-01-03T15:22:05.852Z","createdAt":"2024-01-03T15:22:05.852Z"},{"name":"Петрович","surname":"Иван","lastName":"Мосвич","contacts":[{"type":"Телефон","value":"54365346"}],"id":"1704296143792","updatedAt":"2024-01-03T15:35:43.792Z","createdAt":"2024-01-03T15:35:43.792Z"},{"name":"Ивановна","surname":"Галя","lastName":"Оляпка","contacts":[{"type":"Email","value":"ojr.ru"}],"id":"1704296166713","updatedAt":"2024-01-03T15:36:06.713Z","createdAt":"2024-01-03T15:36:06.713Z"},{"name":"Петрович","surname":"Илья","lastName":"Слукич","contacts":[{"type":"Facebook","value":"fa.131"},{"type":"Телефон","value":"63463463"},{"type":"VK","value":"id_1241251"}],"id":"1704296200469","updatedAt":"2024-01-03T15:36:40.469Z","createdAt":"2024-01-03T15:36:40.469Z"},{"name":"Мусага","surname":"Макар","lastName":"Владимиров","contacts":[{"type":"VK","value":"id_13131450050"},{"type":"Телефон","value":"21516798797"}],"id":"1704296242156","updatedAt":"2024-01-03T15:37:22.156Z","createdAt":"2024-01-03T15:37:22.156Z"}]
