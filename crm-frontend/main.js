@@ -80,7 +80,7 @@ const FORMS_ACTIONS = {
 
     function dateValidation(date) {
       if (date >= 10) return date;
-      return '0' + date;
+      return `0${date}`;
     };
     const createAtDate = new Date(CLIENT_DATA.createdAt);
     clientCreateDate_date.textContent = `${dateValidation(createAtDate.getDate())}.${dateValidation(createAtDate.getMonth())}.${createAtDate.getFullYear()}`;
@@ -370,6 +370,7 @@ function edit_client_form() {
 
       // Update data
       const NEW_CLIENT_DATA = await (await FORMS_ACTIONS.editClient(FORM.getAttribute('clientID'), DATA)).json();
+      console.log(NEW_CLIENT_DATA);
       FORMS_ACTIONS.createClientField(NEW_CLIENT_DATA);
     } else {
       console.log('ОШИБКА');
@@ -410,7 +411,6 @@ function init_clients_filters() {
   // Init filters
   IDFilter.addEventListener('click', async() => {
     const CLIENT_DATA = (await getClients());
-    const SORTED_CLIENT_DATA = [];
 
     for (let i = 0; i < CLIENT_DATA.length; i++) {
       for (let j = 0; j < CLIENT_DATA.length; j++) {
@@ -422,22 +422,105 @@ function init_clients_filters() {
       };
     };
 
+    if (IDFilter.getAttribute('filterID') === 'max-to-min') {
+      IDFilter.setAttribute('filterID', 'min-to-max');
+    } else {
+      IDFilter.setAttribute('filterID', 'max-to-min');
+      CLIENT_DATA.reverse();
+    };
+
     container.innerHTML = '';
     CLIENT_DATA.forEach(client => {
       FORMS_ACTIONS.createClientField(client);
     });
   });
 
-  nameFilter.addEventListener('click', () => {
+  nameFilter.addEventListener('click', async() => {
+    const CLIENT_DATA = (await getClients());
 
+    for (let i = 0; i < CLIENT_DATA.length; i++) {
+      for (let j = 0; j < CLIENT_DATA.length; j++) {
+        if (CLIENT_DATA[i].name[0] < CLIENT_DATA[j].name[0]) {
+          const oldValue = CLIENT_DATA[i];
+          CLIENT_DATA[i] = CLIENT_DATA[j];
+          CLIENT_DATA[j] = oldValue;
+        };
+      };
+    };
+
+    if (nameFilter.getAttribute('filterName') === 'a-to-z') {
+      nameFilter.setAttribute('filterName', 'z-to-a');
+    } else {
+      nameFilter.setAttribute('filterName', 'a-to-z');
+      CLIENT_DATA.reverse();
+    };
+
+    container.innerHTML = '';
+    CLIENT_DATA.forEach(client => {
+      FORMS_ACTIONS.createClientField(client);
+    });
   });
 
-  createDateFilter.addEventListener('click', () => {
+  createDateFilter.addEventListener('click', async() => {
+    const CLIENT_DATA = (await getClients());
 
+    for (let i = 0; i < CLIENT_DATA.length; i++) {
+      for (let j = 0; j < CLIENT_DATA.length; j++) {
+        const firstDate = new Date(CLIENT_DATA[i].createdAt);
+        const secondDate = new Date(CLIENT_DATA[j].createdAt);
+
+        if (Number(firstDate.getTime()) < Number(secondDate.getTime())) {
+          const oldValue = CLIENT_DATA[i];
+          CLIENT_DATA[i] = CLIENT_DATA[j];
+          CLIENT_DATA[j] = oldValue;
+        };
+      };
+    };
+
+    if (createDateFilter.getAttribute('filterID') === 'max-to-min') {
+      createDateFilter.setAttribute('filterID', 'min-to-max');
+    } else {
+      createDateFilter.setAttribute('filterID', 'max-to-min');
+      CLIENT_DATA.reverse();
+    };
+
+    container.innerHTML = '';
+    CLIENT_DATA.forEach(client => {
+      FORMS_ACTIONS.createClientField(client);
+    });
   });
 
-  changeDateFilter.addEventListener('click', () => {
+  changeDateFilter.addEventListener('click', async() => {
+    const CLIENT_DATA = (await getClients());
 
+    for (let i = 0; i < CLIENT_DATA.length; i++) {
+      for (let j = 0; j < CLIENT_DATA.length; j++) {
+        let firstDate = new Date(CLIENT_DATA[i].updatedAt);
+        let secondDate = new Date(CLIENT_DATA[j].updatedAt);
+
+        // console.log(`${Number(firstDate.getTime())} > ${Number(secondDate.getTime())} = ${Number(firstDate.getTime()) > Number(secondDate.getTime())}`);
+        if (Number(firstDate.getTime()) > Number(secondDate.getTime())) {
+          const oldValue = CLIENT_DATA[i];
+          CLIENT_DATA[i] = CLIENT_DATA[j];
+          CLIENT_DATA[j] = oldValue;
+        } else {
+          continue;
+        };
+      };
+    };
+
+    console.log(CLIENT_DATA);
+    if (changeDateFilter.getAttribute('filterChangeDate') === 'max-to-min') {
+      changeDateFilter.setAttribute('filterChangeDate', 'min-to-max');
+    } else {
+      changeDateFilter.setAttribute('filterChangeDate', 'max-to-min');
+      CLIENT_DATA.reverse();
+    };
+
+    container.innerHTML = '';
+    CLIENT_DATA.forEach(client => {
+      FORMS_ACTIONS.createClientField(client);
+    });
   });
 
 };
