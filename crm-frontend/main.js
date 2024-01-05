@@ -524,12 +524,26 @@ function init_clients_filters() {
   });
 
 };
+function init_search_form() {
+  const searchForm = document.querySelector('.header__search-form');
+
+  let timer;
+  searchForm.addEventListener('input', () => {
+    clearInterval(timer);
+    timer = setInterval(() => {
+      console.log(searchForm.value);
+
+      clearInterval(timer);
+    }, 1000);
+  });
+}
 
 
 // Initialization
 new_client_form();
 edit_client_form();
 init_clients_filters();
+init_search_form();
 FORMS_ACTIONS.showClient();
 
 // [{"name":"Арсений","surname":"Скрипников","lastName":"Дмитриевич","contacts":[{"type":"VK","value":"id-13131"},{"type":"Email","value":"ars@ma.ru"},{"type":"Телефон","value":"75757575"}],"id":"1704295325852","updatedAt":"2024-01-03T15:22:05.852Z","createdAt":"2024-01-03T15:22:05.852Z"},{"name":"Петрович","surname":"Иван","lastName":"Мосвич","contacts":[{"type":"Телефон","value":"54365346"}],"id":"1704296143792","updatedAt":"2024-01-03T15:35:43.792Z","createdAt":"2024-01-03T15:35:43.792Z"},{"name":"Ивановна","surname":"Галя","lastName":"Оляпка","contacts":[{"type":"Email","value":"ojr.ru"}],"id":"1704296166713","updatedAt":"2024-01-03T15:36:06.713Z","createdAt":"2024-01-03T15:36:06.713Z"},{"name":"Петрович","surname":"Илья","lastName":"Слукич","contacts":[{"type":"Facebook","value":"fa.131"},{"type":"Телефон","value":"63463463"},{"type":"VK","value":"id_1241251"}],"id":"1704296200469","updatedAt":"2024-01-03T15:36:40.469Z","createdAt":"2024-01-03T15:36:40.469Z"},{"name":"Мусага","surname":"Макар","lastName":"Владимиров","contacts":[{"type":"VK","value":"id_13131450050"},{"type":"Телефон","value":"21516798797"}],"id":"1704296242156","updatedAt":"2024-01-03T15:37:22.156Z","createdAt":"2024-01-03T15:37:22.156Z"}]
