@@ -260,6 +260,9 @@ const FORMS_ACTIONS = {
     const clientData = await (await fetch(`http://localhost:3000/api/clients/${ID}`)).json();
     return clientData;
   },
+  async getClients() {
+    return ((await fetch(`http://localhost:3000/api/clients`)).json());
+  },
   async saveClient(clientData) {
     return await(fetch('http://localhost:3000/api/clients', {
       method: 'POST',
@@ -395,11 +398,6 @@ function edit_client_form() {
   });
 };
 function init_clients_filters() {
-  // Get clients
-  const getClients = async() => {
-    return ((await fetch(`http://localhost:3000/api/clients`)).json());
-  };
-
   // Container
   const container = document.querySelector('.table__body');
   // Filter buttons
@@ -410,7 +408,7 @@ function init_clients_filters() {
 
   // Init filters
   IDFilter.addEventListener('click', async() => {
-    const CLIENT_DATA = (await getClients());
+    const CLIENT_DATA = (await FORMS_ACTIONS.getClients());
 
     for (let i = 0; i < CLIENT_DATA.length; i++) {
       for (let j = 0; j < CLIENT_DATA.length; j++) {
@@ -436,7 +434,7 @@ function init_clients_filters() {
   });
 
   nameFilter.addEventListener('click', async() => {
-    const CLIENT_DATA = (await getClients());
+    const CLIENT_DATA = (await FORMS_ACTIONS.getClients());
 
     for (let i = 0; i < CLIENT_DATA.length; i++) {
       for (let j = 0; j < CLIENT_DATA.length; j++) {
@@ -462,7 +460,7 @@ function init_clients_filters() {
   });
 
   createDateFilter.addEventListener('click', async() => {
-    const CLIENT_DATA = (await getClients());
+    const CLIENT_DATA = (await FORMS_ACTIONS.getClients());
 
     for (let i = 0; i < CLIENT_DATA.length; i++) {
       for (let j = 0; j < CLIENT_DATA.length; j++) {
@@ -491,7 +489,7 @@ function init_clients_filters() {
   });
 
   changeDateFilter.addEventListener('click', async() => {
-    const CLIENT_DATA = (await getClients());
+    const CLIENT_DATA = (await FORMS_ACTIONS.getClients());
 
     for (let i = 0; i < CLIENT_DATA.length; i++) {
       for (let j = 0; j < CLIENT_DATA.length; j++) {
@@ -522,7 +520,6 @@ function init_clients_filters() {
       FORMS_ACTIONS.createClientField(client);
     });
   });
-
 };
 function init_search_form() {
   const searchForm = document.querySelector('.header__search-form');
@@ -530,8 +527,33 @@ function init_search_form() {
   let timer;
   searchForm.addEventListener('input', () => {
     clearInterval(timer);
-    timer = setInterval(() => {
-      console.log(searchForm.value);
+    timer = setInterval(async() => {
+      const CLIENT_DATA = (await FORMS_ACTIONS.getClients());
+
+      function dateValidation(date) {
+        if (date >= 10) return date;
+        return `0${date}`;
+      };
+
+      CLIENT_DATA.forEach(client => {
+        const createAtDate = new Date(client.createdAt);
+        const changeAtDate = new Date(client.updatedAt);
+
+        const clientField = {
+          "id": client.id,
+          "fullname": `${client.name} ${client.surname} ${client.lastName}`,
+
+          "createAtYear": `${dateValidation(createAtDate.getDate())}.${dateValidation(createAtDate.getMonth())}.${createAtDate.getFullYear()}`,
+          "createAtHour": `${dateValidation(createAtDate.getHours())}:${dateValidation(createAtDate.getMinutes())}`,
+
+          "updateAtYear": `${dateValidation(changeAtDate.getDate())}.${dateValidation(changeAtDate.getMonth())}.${changeAtDate.getFullYear()}`,
+          "updateAtHour": `${dateValidation(changeAtDate.getHours())}:${dateValidation(changeAtDate.getMinutes())}`
+        };
+
+        Object.keys(clientField).forEach(key => {
+          console.log(clientField[key]);
+        })
+      });
 
       clearInterval(timer);
     }, 1000);
