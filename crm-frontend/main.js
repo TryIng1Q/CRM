@@ -261,6 +261,9 @@ const FORMS_ACTIONS = {
     return clientData;
   },
   async getClients() {
+    const currentClientsID = document.querySelectorAll('.client__id');
+    console.log(currentClientsID);
+
     return ((await fetch(`http://localhost:3000/api/clients`)).json());
   },
   async saveClient(clientData) {
@@ -536,6 +539,12 @@ function init_search_form() {
       };
 
       CLIENT_DATA.forEach(client => {
+        // Delete old client
+        let clientTableItem = document.getElementById(client.id);
+        if (clientTableItem) {
+          clientTableItem.remove();
+        };
+
         const createAtDate = new Date(client.createdAt);
         const changeAtDate = new Date(client.updatedAt);
 
@@ -550,9 +559,12 @@ function init_search_form() {
           "updateAtHour": `${dateValidation(changeAtDate.getHours())}:${dateValidation(changeAtDate.getMinutes())}`
         };
 
-        Object.keys(clientField).forEach(key => {
-          console.log(clientField[key]);
-        })
+        for (let fieldKey in clientField) {
+          if (clientField[fieldKey].indexOf(searchForm.value) >= 0) {
+            FORMS_ACTIONS.createClientField(client);
+            break;
+          };
+        };
       });
 
       clearInterval(timer);
