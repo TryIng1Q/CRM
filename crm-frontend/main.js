@@ -1,4 +1,6 @@
 const FORMS_ACTIONS = {
+  currentClientList: [],
+
   getClientField(CLIENT_DATA) {
   },
   createClientField(CLIENT_DATA) {
@@ -46,6 +48,9 @@ const FORMS_ACTIONS = {
       EditForm.setAttribute('clientID', CLIENT_DATA.id);
       EditForm.classList.remove('element--disabled');
 
+      const newClientForm = document.getElementById('newClientForm');
+      newClientForm.classList.add('element--disabled');
+
       // ID field
       const idField = document.querySelector('.edit-client__ID');
       idField.textContent = `ID: ${CLIENT_DATA.id}`;
@@ -87,7 +92,7 @@ const FORMS_ACTIONS = {
     clientCreateDate_time.textContent = `${dateValidation(createAtDate.getHours())}:${dateValidation(createAtDate.getMinutes())}`;
 
     const changeAtDate = new Date(CLIENT_DATA.updatedAt);
-    clientChangeDate_date.textContent = `${dateValidation(createAtDate.getDate())}.${dateValidation(createAtDate.getMonth())}.${createAtDate.getFullYear()}`;
+    clientChangeDate_date.textContent = `${dateValidation(changeAtDate.getDate())}.${dateValidation(changeAtDate.getMonth())}.${changeAtDate.getFullYear()}`;
     clientChangeDate_time.textContent = `${dateValidation(changeAtDate.getHours())}:${dateValidation(changeAtDate.getMinutes())}`;
 
     const contactsIcon = {
@@ -261,10 +266,7 @@ const FORMS_ACTIONS = {
     return clientData;
   },
   async getClients() {
-    const currentClientsID = document.querySelectorAll('.client__id');
-    console.log(currentClientsID);
-
-    return ((await fetch(`http://localhost:3000/api/clients`)).json());
+    return await (await fetch(`http://localhost:3000/api/clients`)).json();;
   },
   async saveClient(clientData) {
     return await(fetch('http://localhost:3000/api/clients', {
@@ -305,6 +307,9 @@ function new_client_form() {
   ACTION.openForm.addEventListener('click', (event) => {
     event.preventDefault();
     FORM.classList.remove('element--disabled');
+
+    const EditForm = document.getElementById('editClientForm');
+    EditForm.classList.add('element--disabled');
   });
 
   ACTION.cancelForm.addEventListener('click', (event) => {
@@ -378,6 +383,7 @@ function edit_client_form() {
       const NEW_CLIENT_DATA = await (await FORMS_ACTIONS.editClient(FORM.getAttribute('clientID'), DATA)).json();
       console.log(NEW_CLIENT_DATA);
       FORMS_ACTIONS.createClientField(NEW_CLIENT_DATA);
+      FORMS_ACTIONS.currentClientList = await FORMS_ACTIONS.getClients();
     } else {
       console.log('ОШИБКА');
     };
@@ -410,8 +416,9 @@ function init_clients_filters() {
   const changeDateFilter = document.querySelector('.section-change-date');
 
   // Init filters
-  IDFilter.addEventListener('click', async() => {
-    const CLIENT_DATA = (await FORMS_ACTIONS.getClients());
+  IDFilter.addEventListener('click', () => {
+    const CLIENT_DATA = FORMS_ACTIONS.currentClientList;
+    console.log(CLIENT_DATA);
 
     for (let i = 0; i < CLIENT_DATA.length; i++) {
       for (let j = 0; j < CLIENT_DATA.length; j++) {
@@ -437,7 +444,7 @@ function init_clients_filters() {
   });
 
   nameFilter.addEventListener('click', async() => {
-    const CLIENT_DATA = (await FORMS_ACTIONS.getClients());
+    const CLIENT_DATA = FORMS_ACTIONS.currentClientList;
 
     for (let i = 0; i < CLIENT_DATA.length; i++) {
       for (let j = 0; j < CLIENT_DATA.length; j++) {
@@ -463,7 +470,7 @@ function init_clients_filters() {
   });
 
   createDateFilter.addEventListener('click', async() => {
-    const CLIENT_DATA = (await FORMS_ACTIONS.getClients());
+    const CLIENT_DATA = FORMS_ACTIONS.currentClientList;
 
     for (let i = 0; i < CLIENT_DATA.length; i++) {
       for (let j = 0; j < CLIENT_DATA.length; j++) {
@@ -492,14 +499,13 @@ function init_clients_filters() {
   });
 
   changeDateFilter.addEventListener('click', async() => {
-    const CLIENT_DATA = (await FORMS_ACTIONS.getClients());
+    const CLIENT_DATA = FORMS_ACTIONS.currentClientList;
 
     for (let i = 0; i < CLIENT_DATA.length; i++) {
       for (let j = 0; j < CLIENT_DATA.length; j++) {
         let firstDate = new Date(CLIENT_DATA[i].updatedAt);
         let secondDate = new Date(CLIENT_DATA[j].updatedAt);
 
-        // console.log(`${Number(firstDate.getTime())} > ${Number(secondDate.getTime())} = ${Number(firstDate.getTime()) > Number(secondDate.getTime())}`);
         if (Number(firstDate.getTime()) > Number(secondDate.getTime())) {
           const oldValue = CLIENT_DATA[i];
           CLIENT_DATA[i] = CLIENT_DATA[j];
@@ -530,6 +536,9 @@ function init_search_form() {
   let timer;
   searchForm.addEventListener('input', () => {
     clearInterval(timer);
+
+    FORMS_ACTIONS.currentClientList = [];
+
     timer = setInterval(async() => {
       const CLIENT_DATA = (await FORMS_ACTIONS.getClients());
 
@@ -562,6 +571,7 @@ function init_search_form() {
         for (let fieldKey in clientField) {
           if (clientField[fieldKey].indexOf(searchForm.value) >= 0) {
             FORMS_ACTIONS.createClientField(client);
+            FORMS_ACTIONS.currentClientList.push(client);
             break;
           };
         };
@@ -578,6 +588,8 @@ new_client_form();
 edit_client_form();
 init_clients_filters();
 init_search_form();
-FORMS_ACTIONS.showClient();
 
-// [{"name":"Арсений","surname":"Скрипников","lastName":"Дмитриевич","contacts":[{"type":"VK","value":"id-13131"},{"type":"Email","value":"ars@ma.ru"},{"type":"Телефон","value":"75757575"}],"id":"1704295325852","updatedAt":"2024-01-03T15:22:05.852Z","createdAt":"2024-01-03T15:22:05.852Z"},{"name":"Петрович","surname":"Иван","lastName":"Мосвич","contacts":[{"type":"Телефон","value":"54365346"}],"id":"1704296143792","updatedAt":"2024-01-03T15:35:43.792Z","createdAt":"2024-01-03T15:35:43.792Z"},{"name":"Ивановна","surname":"Галя","lastName":"Оляпка","contacts":[{"type":"Email","value":"ojr.ru"}],"id":"1704296166713","updatedAt":"2024-01-03T15:36:06.713Z","createdAt":"2024-01-03T15:36:06.713Z"},{"name":"Петрович","surname":"Илья","lastName":"Слукич","contacts":[{"type":"Facebook","value":"fa.131"},{"type":"Телефон","value":"63463463"},{"type":"VK","value":"id_1241251"}],"id":"1704296200469","updatedAt":"2024-01-03T15:36:40.469Z","createdAt":"2024-01-03T15:36:40.469Z"},{"name":"Мусага","surname":"Макар","lastName":"Владимиров","contacts":[{"type":"VK","value":"id_13131450050"},{"type":"Телефон","value":"21516798797"}],"id":"1704296242156","updatedAt":"2024-01-03T15:37:22.156Z","createdAt":"2024-01-03T15:37:22.156Z"}]
+(async() => {
+  FORMS_ACTIONS.currentClientList = await FORMS_ACTIONS.getClients();
+})();
+FORMS_ACTIONS.showClient();
