@@ -1,34 +1,79 @@
 @media (max-width: 1024px) {
-    .main {
-        min-width: 728px;
+    .body, .main {
+        width: auto;
+        min-width: 825px;
     }
     .table, .table__head, .table__body {
-        min-width: 728px;
+        min-width: 825px;
     }
+    .table__head, .table__body {
+        padding: 0 20px;
+    }
+    .table__head > div, .table__body > div {
+        padding: 0;
+    }
+    .client > div {
+        padding: 0;
+    }
+
+    .section-id, .client__id {
+        margin-right: 10px;
+        max-width: 100px;
+        min-width: 62px;
+    }
+    .table__head > .section-name {
+        margin-right: 35px;
+        width: 149px;
+    }
+    .client__name {
+        max-width: 185px;
+        min-width: 185px;
+    }
+    .client > .client__create-date {
+        flex-flow: column nowrap;
+        align-items: flex-start;
+        justify-content: center;
+    }
+    .section-create-date, .client__create-date {
+        max-width: 120px;
+        min-width: 72px;
+    }
+    .client > .client__change-date {
+        flex-flow: column nowrap;
+        align-items: flex-start;
+        justify-content: center;
+    }
+    .section-change-date, .client__change-date {
+        max-width: 120px;
+        min-width: 72px;
+    }
+    .section-contacts, .client__contacts {
+        max-width: 110px;
+        min-width: 108px;
+    }
+}
+
+@media (max-width: 950px) {
     .client > .client__actions {
         flex-flow: column nowrap;
         align-items: flex-start;
         justify-content: center;
     }
+    .client > .client__actions > div {
+        padding: 2px 0;
+    }
+    .section-actions, .client__actions {
+        width: 105px;
+    }
+}
 
-    .client__id {
-        max-width: 100px;
-        min-width: 62px;
+@media (max-width: 850px) {
+    .client > .client__actions {
+        flex-flow: column nowrap;
+        align-items: flex-start;
+        justify-content: center;
     }
-    .client__name {
-        max-width: 230px;
-        min-width: 181px;
+    .section-actions, .client__actions {
+        width: 105px;
     }
-    .client__create-date {
-        max-width: 130px;
-        min-width: 72px;
-    }
-    .client__change-date {
-        max-width: 130px;
-        min-width: 72px;
-    }
-    .client .client__contacts {
-        max-width: 110px;
-        min-width: 108px;
-    }
-  }
+}
