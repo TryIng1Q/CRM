@@ -242,6 +242,7 @@
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
 
 	margin: 0 7px 0px 0;
 	width: 16px;
@@ -250,6 +251,10 @@
   opacity: 0.7;
   border-radius: 50%;
   background-position: center;
+
+  color: #000;
+  font-size: 9px;
+
 }
 .client__contact-tooltip {
   position: absolute;
@@ -291,7 +296,7 @@
 .client__contact-icon:hover .client__contact-tooltip {
   display: flex;
 } 
-.client__contact-icon:nth-child(5) {
+.client__contact-icon:nth-child(5n+5) {
 	margin-right: 0;
 }
 

@@ -1,5 +1,6 @@
 const FORMS_ACTIONS = {
   currentClientList: [],
+  countOfContacts: 0,
 
   getClientField(CLIENT_DATA) {
   },
@@ -9,6 +10,7 @@ const FORMS_ACTIONS = {
 
     const client = document.createElement('div');
     client.setAttribute('id', CLIENT_DATA.id);
+    client.setAttribute('contactsID', CLIENT_DATA.id);
     client.classList.add('client');
 
     const clientID = document.createElement('div');
@@ -44,6 +46,7 @@ const FORMS_ACTIONS = {
 
     // Add EventListener
     clientActionEdit.addEventListener('click', async () => {
+
       const EditForm = document.getElementById('editClientForm');
       EditForm.setAttribute('clientID', CLIENT_DATA.id);
       EditForm.classList.remove('element--disabled');
@@ -71,6 +74,7 @@ const FORMS_ACTIONS = {
       const contactsWrapper = document.getElementById('editClientContactsWrapper');
 
       currentClientData.contacts.forEach(contact => {
+        this.countOfContacts += 1;
         this.createContactForm(contactsWrapper, true, contact);
       });
     });
@@ -102,7 +106,28 @@ const FORMS_ACTIONS = {
       'Email': 'icons/email.svg',
       'Facebook': 'icons/facebook.svg',
     };
-    CLIENT_DATA.contacts.forEach(contact => {
+
+    for (let i = 0; i !== (CLIENT_DATA.contacts).length; i++) {
+      let contact = CLIENT_DATA.contacts[i];
+
+      if (i === 4) {
+        const contactWrapper = document.createElement('div');
+        contactWrapper.classList.add('client__contact-icon');
+  
+        contactWrapper.textContent = `+${(CLIENT_DATA.contacts).length - 4}`;
+        contactWrapper.style.border = '1px solid rgb(152, 115, 255)';
+  
+        clientContactsWrapper.append(contactWrapper);
+
+        clientContactsWrapper.addEventListener('click', () => {
+          const hideContacts = document.querySelectorAll(`[contactsID="${CLIENT_DATA.id}"] > .client__contacts > .element--disabled`);
+          hideContacts.forEach(contact => {
+            contactWrapper.remove();
+            contact.classList.remove('element--disabled');
+          });
+        });
+      };
+
       const contactWrapper = document.createElement('div');
       contactWrapper.classList.add('client__contact-icon');
 
@@ -126,7 +151,11 @@ const FORMS_ACTIONS = {
       contactWrapper.append(contactTooltip);
 
       clientContactsWrapper.append(contactWrapper);
-    });
+
+      if (i > 3) {
+        contactWrapper.classList.add('element--disabled');
+      };
+    };
 
     clientActionEdit.innerHTML = '<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M0 10.5002V13.0002H2.5L9.87333 5.62687L7.37333 3.12687L0 10.5002ZM11.8067 3.69354C12.0667 3.43354 12.0667 3.01354 11.8067 2.75354L10.2467 1.19354C9.98667 0.933535 9.56667 0.933535 9.30667 1.19354L8.08667 2.41354L10.5867 4.91354L11.8067 3.69354Z" fill="#9873FF" /></svg> Изменить';
     clientActionDelete.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0C2.682 0 0 2.682 0 6C0 9.318 2.682 12 6 12C9.318 12 12 9.318 12 6C12 2.682 9.318 0 6 0ZM6 10.8C3.354 10.8 1.2 8.646 1.2 6C1.2 3.354 3.354 1.2 6 1.2C8.646 1.2 10.8 3.354 10.8 6C10.8 8.646 8.646 10.8 6 10.8ZM8.154 3L6 5.154L3.846 3L3 3.846L5.154 6L3 8.154L3.846 9L6 6.846L8.154 9L9 8.154L6.846 6L9 3.846L8.154 3Z" fill="#F06A4D" /></svg> Удалить';
@@ -361,7 +390,12 @@ function edit_client_form() {
   ACTION.editContact.addEventListener('click', event => {
     event.preventDefault();
 
-    FORMS_ACTIONS.createContactForm(ACTION.editContactWrapper, false);
+    FORMS_ACTIONS.countOfContacts += 1;
+    if (FORMS_ACTIONS.countOfContacts > 10) {
+      ACTION.editContact.disabled = true;
+    } else {
+      FORMS_ACTIONS.createContactForm(ACTION.editContactWrapper, false);
+    }
   });
 
   ACTION.saveEdit.addEventListener('click', async event => {
