@@ -392,7 +392,7 @@
 .form-client__input--error::placeholder {
   color:#F06A4D;
 }
-.form-client__contanct {
+.form-client__contact {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
@@ -405,13 +405,13 @@
 	
   background-color: #e4e3e963;
 }
-.form-client__contanct-add {
+.form-client__contact-add {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
 }
-.form-client__contanct-add-btn {
+.form-client__contact-add-btn {
   margin: 0 0 0 6px;
 
   font-family: 'OpenSans-Regular';
@@ -434,7 +434,7 @@
   color: #F06A4D;
 }
 /* ADD CONTACTS */
-.add-contant {
+.add-contact {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -443,7 +443,7 @@
   margin: 0 0 25px 0;
   min-height: 40px;
 }
-.add-contant__select {
+.add-contact__select {
   padding: 10px 8px 10px 12px;
   width: 125px;
   height: 40px;
@@ -458,9 +458,7 @@
   border: 1px solid #C8C5D1;
   border-right: 0;
 }
-.add-contant__option {
-}
-.add-contant__input {
+.add-contact__input {
   padding: 8px 12px;
   width: 240px;
   height: 40px;
@@ -472,19 +470,19 @@
 
   border: 1px solid #C8C5D1;
 }
-.add-contant__input::placeholder {
+.add-contact__input::placeholder {
 	font-family: 'OpenSans-Regular';
   font-size: 14px;
   line-height: 19px;
   color: #B0B0B0;
 }
-.add-contant__input--error {
+.add-contact__input--error {
   border-bottom: 1px solid #F06A4D;
 }
-.add-contant__input--error::placeholder {
+.add-contact__input--error::placeholder {
   color: #F06A4D;
 }
-.add-contant__close-btn {
+.add-contact__close-btn {
   width: 30px;
   height: 40px;
 
@@ -508,7 +506,7 @@
 }
 .form-client__cancel, .form-client__delete {
 	font-family: 'OpenSans-Regular';
-  font-size: 12px;
+	font-size: 12px;
   line-height: 16px;
   text-decoration: underline;
 
@@ -557,6 +555,70 @@
   color: #9873FF;
 }
 
+/* DELETE FORM */
+.delete-client__wrapper {
+	position: absolute;
+	top: 115px;
+	left: 50%;
+  	margin-left: -225px;
+}
+.delete-client__form {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+	align-items: center;
+
+	width: 450px;
+	height: 215px;
+
+	background-color: #fff;
+}
+.delete-client__title {
+	margin: 20px 0 15px 0 ;
+
+	font-family: 'OpenSans-Bold';
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 25px;
+}
+.delete-client__deskr {
+	margin: 0 0 25px 0 ;
+	width: 275px;
+
+	text-align: center;
+	background-color: var(--section-background-color);
+	font-family: 'OpenSans-Regular';
+	font-size: 14px;
+	line-height: 19px;
+	color: var(--main-color);
+}
+.delete-client__btn-delete {
+	margin: 0 0 5px 0;
+	padding: 12px 35px;
+
+	background-color: #9873FF;
+	border: 0;
+
+	color: #FFF;
+	font-family: 'OpenSans-Regular';
+	font-size: 14px;
+}
+.delete-client__btn-cancel {
+	border: 0;
+	background-color: initial;
+	color: #333333;
+	text-decoration: underline #333333;
+	font-family: 'OpenSans-Regular';
+	font-size: 12px;
+}
+.delete-client__btn-close {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+  
+	border: 0;
+	background-color: initial;
+}
 
 /* ANIMATION STYLE */
 .element--disabled {

@@ -76,30 +76,30 @@
 			</button>
 
 			<form id="newClientForm" class="form-client element--disabled" action="">
-        <h2 class="form-client__title">Новый клиент</h2>
+				<h2 class="form-client__title">Новый клиент</h2>
 
 				<input id="newClientSurname" class="form-client__input" type="text" placeholder="Фамилия*">
 				<input id="newClientName" class="form-client__input" type="text" placeholder="Имя*">
 				<input id="newClientLastName" class="form-client__input" type="text" placeholder="Отчество">
 
 				<div id="newClientContactsWrapper" class="form-client__contanct">
-          <div id="newClientAddContact" class="form-client__contanct-add">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M6.99998 3.66671C6.63331 3.66671 6.33331 3.96671 6.33331 4.33337V6.33337H4.33331C3.96665 6.33337 3.66665 6.63337 3.66665 7.00004C3.66665 7.36671 3.96665 7.66671 4.33331 7.66671H6.33331V9.66671C6.33331 10.0334 6.63331 10.3334 6.99998 10.3334C7.36665 10.3334 7.66665 10.0334 7.66665 9.66671V7.66671H9.66665C10.0333 7.66671 10.3333 7.36671 10.3333 7.00004C10.3333 6.63337 10.0333 6.33337 9.66665 6.33337H7.66665V4.33337C7.66665 3.96671 7.36665 3.66671 6.99998 3.66671ZM6.99998 0.333374C3.31998 0.333374 0.333313 3.32004 0.333313 7.00004C0.333313 10.68 3.31998 13.6667 6.99998 13.6667C10.68 13.6667 13.6666 10.68 13.6666 7.00004C13.6666 3.32004 10.68 0.333374 6.99998 0.333374ZM6.99998 12.3334C4.05998 12.3334 1.66665 9.94004 1.66665 7.00004C1.66665 4.06004 4.05998 1.66671 6.99998 1.66671C9.93998 1.66671 12.3333 4.06004 12.3333 7.00004C12.3333 9.94004 9.93998 12.3334 6.99998 12.3334Z" fill="#9873FF"/>
-            </svg>
-            <button class="form-client__contanct-add-btn"> Добавить контакт</button>
-          </div>
+					<div id="newClientAddContact" class="form-client__contanct-add">
+						<svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+							<path d="M6.99998 3.66671C6.63331 3.66671 6.33331 3.96671 6.33331 4.33337V6.33337H4.33331C3.96665 6.33337 3.66665 6.63337 3.66665 7.00004C3.66665 7.36671 3.96665 7.66671 4.33331 7.66671H6.33331V9.66671C6.33331 10.0334 6.63331 10.3334 6.99998 10.3334C7.36665 10.3334 7.66665 10.0334 7.66665 9.66671V7.66671H9.66665C10.0333 7.66671 10.3333 7.36671 10.3333 7.00004C10.3333 6.63337 10.0333 6.33337 9.66665 6.33337H7.66665V4.33337C7.66665 3.96671 7.36665 3.66671 6.99998 3.66671ZM6.99998 0.333374C3.31998 0.333374 0.333313 3.32004 0.333313 7.00004C0.333313 10.68 3.31998 13.6667 6.99998 13.6667C10.68 13.6667 13.6666 10.68 13.6666 7.00004C13.6666 3.32004 10.68 0.333374 6.99998 0.333374ZM6.99998 12.3334C4.05998 12.3334 1.66665 9.94004 1.66665 7.00004C1.66665 4.06004 4.05998 1.66671 6.99998 1.66671C9.93998 1.66671 12.3333 4.06004 12.3333 7.00004C12.3333 9.94004 9.93998 12.3334 6.99998 12.3334Z" fill="#9873FF"/>
+						</svg>
+						<button class="form-client__contanct-add-btn"> Добавить контакт</button>
+					</div>
 				</div>
 
-        <p id="newClientErrorMessage" class="form-client__error-message"></p>
+				<p id="newClientErrorMessage" class="form-client__error-message"></p>
 
 				<button id="newClientSave" class="form-client__save">Сохранить</button>
 				<button id="newClientCancel" class="form-client__cancel">Отмена</button>
-        <button id="newClientClose" class="form-client__close-block">
-          <svg width="29" height="29" viewBox="0 0 29 29" fill="none">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M22.2332 7.73333L21.2665 6.76666L14.4998 13.5334L7.73318 6.7667L6.76652 7.73336L13.5332 14.5L6.76654 21.2667L7.73321 22.2333L14.4998 15.4667L21.2665 22.2334L22.2332 21.2667L15.4665 14.5L22.2332 7.73333Z" fill="#B0B0B0"/>
-          </svg>
-        </button>
+				<button id="newClientClose" class="form-client__close-block">
+				<svg width="29" height="29" viewBox="0 0 29 29" fill="none">
+					<path fill-rule="evenodd" clip-rule="evenodd" d="M22.2332 7.73333L21.2665 6.76666L14.4998 13.5334L7.73318 6.7667L6.76652 7.73336L13.5332 14.5L6.76654 21.2667L7.73321 22.2333L14.4998 15.4667L21.2665 22.2334L22.2332 21.2667L15.4665 14.5L22.2332 7.73333Z" fill="#B0B0B0"/>
+				</svg>
+				</button>
 			</form>
 		</div>
 		<div class="edit-client">
@@ -116,12 +116,12 @@
 				<h3 class="edit-client__input-title">Отчество</h3>
 				<input id="editClientLastName" class="form-client__input" type="text">
 
-				<div id="editClientContactsWrapper" class="form-client__contanct">
-					<div id="editClientAddContact" class="form-client__contanct-add">
+				<div id="editClientContactsWrapper" class="form-client__contact">
+					<div id="editClientAddContact" class="form-client__contact-add">
 						<svg width="14" height="14" viewBox="0 0 14 14" fill="none">
 						<path d="M6.99998 3.66671C6.63331 3.66671 6.33331 3.96671 6.33331 4.33337V6.33337H4.33331C3.96665 6.33337 3.66665 6.63337 3.66665 7.00004C3.66665 7.36671 3.96665 7.66671 4.33331 7.66671H6.33331V9.66671C6.33331 10.0334 6.63331 10.3334 6.99998 10.3334C7.36665 10.3334 7.66665 10.0334 7.66665 9.66671V7.66671H9.66665C10.0333 7.66671 10.3333 7.36671 10.3333 7.00004C10.3333 6.63337 10.0333 6.33337 9.66665 6.33337H7.66665V4.33337C7.66665 3.96671 7.36665 3.66671 6.99998 3.66671ZM6.99998 0.333374C3.31998 0.333374 0.333313 3.32004 0.333313 7.00004C0.333313 10.68 3.31998 13.6667 6.99998 13.6667C10.68 13.6667 13.6666 10.68 13.6666 7.00004C13.6666 3.32004 10.68 0.333374 6.99998 0.333374ZM6.99998 12.3334C4.05998 12.3334 1.66665 9.94004 1.66665 7.00004C1.66665 4.06004 4.05998 1.66671 6.99998 1.66671C9.93998 1.66671 12.3333 4.06004 12.3333 7.00004C12.3333 9.94004 9.93998 12.3334 6.99998 12.3334Z" fill="#9873FF"/>
 						</svg>
-						<button class="form-client__contanct-add-btn"> Добавить контакт</button>
+						<button class="form-client__contact-add-btn"> Добавить контакт</button>
 					</div>
 				</div>
 
@@ -130,6 +130,19 @@
 				<button id="editClientSave" class="form-client__save">Сохранить</button>
 				<button id="deleteClient" class="form-client__delete">Удалить клиента</button>
 				<button id="editClientClose" class="form-client__close-block">
+					<svg width="29" height="29" viewBox="0 0 29 29" fill="none">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M22.2332 7.73333L21.2665 6.76666L14.4998 13.5334L7.73318 6.7667L6.76652 7.73336L13.5332 14.5L6.76654 21.2667L7.73321 22.2333L14.4998 15.4667L21.2665 22.2334L22.2332 21.2667L15.4665 14.5L22.2332 7.73333Z" fill="#B0B0B0"/>
+					</svg>
+				</button>
+			</form>
+		</div>
+		<div class="delete-client__wrapper">
+			<form id="deleteClientForm" class="delete-client__form element--disabled">
+				<h2 class="delete-client__title">Удалить клиента</h2>
+				<p class="delete-client__deskr">Вы действительно хотите удалить данного клиента?</p>
+				<button id="delete-client-btn" class="delete-client__btn-delete">Удалить</button>
+				<button id="cancel-delete-btn" class="delete-client__btn-cancel">Отмена</button>
+				<button id="close-delete-form-btn" class="delete-client__btn-close">
 					<svg width="29" height="29" viewBox="0 0 29 29" fill="none">
 						<path fill-rule="evenodd" clip-rule="evenodd" d="M22.2332 7.73333L21.2665 6.76666L14.4998 13.5334L7.73318 6.7667L6.76652 7.73336L13.5332 14.5L6.76654 21.2667L7.73321 22.2333L14.4998 15.4667L21.2665 22.2334L22.2332 21.2667L15.4665 14.5L22.2332 7.73333Z" fill="#B0B0B0"/>
 					</svg>

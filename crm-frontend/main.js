@@ -79,7 +79,10 @@ const FORMS_ACTIONS = {
       });
     });
     clientActionDelete.addEventListener('click', async () => {
-      this.deleteClient(CLIENT_DATA.id);
+      const deleteForm = document.getElementById('deleteClientForm');
+
+      deleteForm.setAttribute('currentID', CLIENT_DATA.id);
+      deleteForm.classList.remove('element--disabled');
     });
 
 
@@ -182,15 +185,15 @@ const FORMS_ACTIONS = {
   createContactForm(CONTACT_WRAPPER, filled, contact) {
     // CreateWrapper
     const addContactWrapper = document.createElement('div');
-    addContactWrapper.classList.add('add-contant');
+    addContactWrapper.classList.add('add-contact');
 
     // Create Selector
     const addContactSelect = document.createElement('select');
-    addContactSelect.classList.add('add-contant__select');
+    addContactSelect.classList.add('add-contact__select');
 
     ['Телефон', 'Email', 'Facebook', 'VK', 'Другое'].forEach(optionValue => {
       const newOption = document.createElement('option');
-      newOption.classList.add('add-contant__option');
+      newOption.classList.add('add-contact__option');
       newOption.value = optionValue;
       newOption.innerHTML = optionValue;
 
@@ -199,12 +202,12 @@ const FORMS_ACTIONS = {
 
     // Create Input
     const addContactInput = document.createElement('input');
-    addContactInput.classList.add('add-contant__input');
+    addContactInput.classList.add('add-contact__input');
     addContactInput.setAttribute('placeholder', 'Введите данные контакта');
 
     // Create CloseBtn
     const addContactCloseBtn = document.createElement('button');
-    addContactCloseBtn.classList.add('add-contant__close-btn');
+    addContactCloseBtn.classList.add('add-contact__close-btn');
     addContactCloseBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0C2.682 0 0 2.682 0 6C0 9.318 2.682 12 6 12C9.318 12 12 9.318 12 6C12 2.682 9.318 0 6 0ZM6 10.8C3.354 10.8 1.2 8.646 1.2 6C1.2 3.354 3.354 1.2 6 1.2C8.646 1.2 10.8 3.354 10.8 6C10.8 8.646 8.646 10.8 6 10.8ZM8.154 3L6 5.154L3.846 3L3 3.846L5.154 6L3 8.154L3.846 9L6 6.846L8.154 9L9 8.154L6.846 6L9 3.846L8.154 3Z" fill="#B0B0B0"/></svg>`;
 
     if(filled) {
@@ -226,7 +229,7 @@ const FORMS_ACTIONS = {
   checkValidation(formContainer, errorMessageWrapper, formType) {
     let validationFlag = true;
     const nameFields = document.querySelectorAll(`#${formContainer.id} > .form-client__input`);
-    const contactsFields = document.querySelectorAll(`#${formContainer.id} .add-contant`);
+    const contactsFields = document.querySelectorAll(`#${formContainer.id} .add-contact`);
 
     // Check FIO
     nameFields.forEach(field => {
@@ -248,7 +251,7 @@ const FORMS_ACTIONS = {
 
       if (!contactValue.value) {
         // Вывод ошибки
-        contactValue.classList.add('add-contant__input--error');
+        contactValue.classList.add('add-contact__input--error');
         errorMessageWrapper.innerHTML = 'Ошибка: поле не заполнено';
 
         validationFlag = false;
@@ -270,7 +273,7 @@ const FORMS_ACTIONS = {
   },
   clearFields(currentForm) {
     const nameFields = document.querySelectorAll(`#${currentForm.id} > .form-client__input`);
-    const contactsWrapper = document.querySelectorAll(`#${currentForm.id} .add-contant`);
+    const contactsWrapper = document.querySelectorAll(`#${currentForm.id} .add-contact`);
 
     // Clear FIO
     nameFields.forEach(field => {
@@ -615,13 +618,39 @@ function init_search_form() {
     }, 1000);
   });
 }
+function init_delete_form() {
+  const FORM = document.getElementById('deleteClientForm');
 
+  const ACTION = {
+    'deleteClient': document.getElementById('delete-client-btn'),
+    'cancelForm': document.getElementById('cancel-delete-btn'),
+    'closeForm': document.getElementById('close-delete-form-btn'),
+  };
+
+  ACTION.deleteClient.addEventListener('click', event => {
+    event.preventDefault();
+
+    FORMS_ACTIONS.deleteClient(FORM.getAttribute('currentID'));
+    FORM.classList.add('element--disabled');
+  });
+  ACTION.cancelForm.addEventListener('click', event => {
+    event.preventDefault();
+
+    FORM.classList.add('element--disabled');
+  });
+  ACTION.closeForm.addEventListener('click', event => {
+    event.preventDefault();
+
+    FORM.classList.add('element--disabled');
+  });
+}
 
 // Initialization
 new_client_form();
 edit_client_form();
 init_clients_filters();
 init_search_form();
+init_delete_form();
 
 (async() => {
   FORMS_ACTIONS.currentClientList = await FORMS_ACTIONS.getClients();
