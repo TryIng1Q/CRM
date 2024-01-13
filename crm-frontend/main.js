@@ -652,6 +652,7 @@ init_clients_filters();
 init_search_form();
 init_delete_form();
 
+// Init clients const
 (async() => {
   FORMS_ACTIONS.currentClientList = await FORMS_ACTIONS.getClients();
 })();
