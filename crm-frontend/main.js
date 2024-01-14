@@ -328,6 +328,7 @@ const FORMS_ACTIONS = {
 
 function new_client_form() {
   const FORM = document.getElementById('newClientForm');
+  const bgShadow = document.querySelector('.shadow-block');
   const ACTION = {
     'openForm': document.getElementById('newClientOpen'),
     'closeForm': document.getElementById('newClientClose'),
@@ -342,6 +343,8 @@ function new_client_form() {
 
     const EditForm = document.getElementById('editClientForm');
     EditForm.classList.add('element--disabled');
+
+    bgShadow.style.display = 'block';
   });
 
   ACTION.cancelForm.addEventListener('click', (event) => {

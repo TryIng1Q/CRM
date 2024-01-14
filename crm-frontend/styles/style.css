@@ -34,6 +34,23 @@
 	justify-content: flex-start;
 	align-items: center;
 	background-color: var(--body-background-color);
+
+	position: relative;
+}
+.shadow-block {
+	content: '';
+	z-index: 0;
+
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	width: 100vw;
+	height: 100vh;
+
+
+	background-color: #79797971;
 }
 
 /* COMMON STYLE */
@@ -315,6 +332,11 @@
 }
 
 /* FORMS */
+.new-client {
+	position: relative;
+
+	z-index: 10;
+}
 .new-client__show-btn {
 	display: flex;
 	flex-flow: row nowrap;
@@ -346,7 +368,7 @@
 	position: absolute;
 	top: 20px;
 	left: 50%;
-  margin-left: -225px;
+  	margin-left: -225px;
 
 	padding: 20px 0 30px 0;
 	width: 450px;
@@ -556,7 +578,7 @@
 }
 
 /* DELETE FORM */
-.delete-client__wrapper {
+.delete-client {
 	position: absolute;
 	top: 115px;
 	left: 50%;
@@ -623,4 +645,7 @@
 /* ANIMATION STYLE */
 .element--disabled {
   display: none;
+}
+.element--shadow {
+	filter: grayscale(100%);
 }
