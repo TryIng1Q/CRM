@@ -350,11 +350,15 @@ function new_client_form() {
   ACTION.cancelForm.addEventListener('click', (event) => {
     event.preventDefault();
     FORM.classList.add('element--disabled');
+
+    bgShadow.style.display = 'none';
   });
 
   ACTION.closeForm.addEventListener('click', (event) => {
     event.preventDefault();
     FORM.classList.add('element--disabled');
+
+    bgShadow.style.display = 'none';
   });
 
   ACTION.newContact.addEventListener('click', (event) => {
@@ -376,6 +380,8 @@ function new_client_form() {
 
       const NEW_CLIENT_DATA = await (await FORMS_ACTIONS.saveClient(DATA)).json();
       FORMS_ACTIONS.createClientField(NEW_CLIENT_DATA);
+
+      bgShadow.style.display = 'none';
     } else {
       console.log('ОШИБКА');
     };
