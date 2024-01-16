@@ -46,7 +46,6 @@ const FORMS_ACTIONS = {
 
     // Add EventListener
     clientActionEdit.addEventListener('click', async () => {
-
       const EditForm = document.getElementById('editClientForm');
       EditForm.setAttribute('clientID', CLIENT_DATA.id);
       EditForm.classList.remove('element--disabled');
@@ -60,6 +59,10 @@ const FORMS_ACTIONS = {
 
       // Clear Old Fields
       this.clearFields(EditForm);
+
+      // Add background grayscale
+      const bgShadow = document.querySelector('.shadow-block');
+      bgShadow.style.display = 'block';
 
       const currentClientData = await (await fetch(`http://localhost:3000/api/clients/${CLIENT_DATA.id}`)).json();
       
@@ -380,6 +383,7 @@ function new_client_form() {
 
       const NEW_CLIENT_DATA = await (await FORMS_ACTIONS.saveClient(DATA)).json();
       FORMS_ACTIONS.createClientField(NEW_CLIENT_DATA);
+      FORMS_ACTIONS.currentClientList = await FORMS_ACTIONS.getClients();
 
       bgShadow.style.display = 'none';
     } else {
@@ -389,6 +393,7 @@ function new_client_form() {
 };
 function edit_client_form() {
   const FORM = document.getElementById('editClientForm');
+  const bgShadow = document.querySelector('.shadow-block');
   const ERROR_MESSAGE = document.getElementById('editClientErrorMessage');
 
   const ACTION = {
@@ -430,6 +435,9 @@ function edit_client_form() {
       console.log(NEW_CLIENT_DATA);
       FORMS_ACTIONS.createClientField(NEW_CLIENT_DATA);
       FORMS_ACTIONS.currentClientList = await FORMS_ACTIONS.getClients();
+
+      // Close background grayscale
+      bgShadow.style.display = 'none';
     } else {
       console.log('ОШИБКА');
     };
@@ -444,12 +452,18 @@ function edit_client_form() {
 
     //Delete client function
     FORMS_ACTIONS.deleteClient(FORM.getAttribute('clientID'));
+
+    // Close background grayscale
+    bgShadow.style.display = 'none';
   });
 
   ACTION.closeForm.addEventListener('click', event => {
     event.preventDefault();
 
     FORM.classList.add('element--disabled');
+
+    // Close background grayscale
+    bgShadow.style.display = 'none';
   });
 };
 function init_clients_filters() {
@@ -666,3 +680,6 @@ init_delete_form();
   FORMS_ACTIONS.currentClientList = await FORMS_ACTIONS.getClients();
 })();
 FORMS_ACTIONS.showClient();
+
+
+// Остановка на  пофиксить баг с фильтрацией дат
